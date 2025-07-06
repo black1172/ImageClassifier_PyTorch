@@ -14,5 +14,10 @@ class CIFAR10CNN(nn.Module):
         self.fc = nn.Linear(2304, 10)       # Final classification, 2304 inputs, 10 outputs
         
     def forward(self, x):
-        # TODO: Define how data flows through the network
-        pass
+        x = self.conv1(x)    # Apply first conv layer
+        x = self.pool1(x)    # Apply first pooling 
+        x = self.conv2(x)    # Apply second conv layer
+        x = self.pool2(x)    # Apply second pooling
+        x = torch.flatten(x, 1)  # Flatten, need to say on 1st dimension so we only have a 0th dimmension of linear values
+        x = self.fc(x)       # Final classification
+        return x             
